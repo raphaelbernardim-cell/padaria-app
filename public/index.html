@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Padaria App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div>
+          <p class="eyebrow">Padaria App</p>
+          <h1>Controle diário da padaria</h1>
+          <p class="sidebar-copy">
+            Registre produtos, acompanhe o estoque e lance vendas em uma única tela.
+          </p>
+        </div>
+
+        <div class="sidebar-card">
+          <span class="badge">Hoje</span>
+          <h2>Operação simplificada</h2>
+          <p>
+            Use o painel para acompanhar faturamento, ticket médio, estoque e os itens com maior saída.
+          </p>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Painel em tempo real</p>
+            <h2>Gestão de vendas e produção para a sua padaria</h2>
+            <p>
+              Acompanhe os números do dia, organize o catálogo e registre cada venda com atualização automática.
+            </p>
+          </div>
+          <button class="primary-button" id="refreshDashboardButton">Atualizar painel</button>
+        </section>
+
+        <section class="metrics-grid" id="metricsGrid"></section>
+
+        <section class="panel-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Cadastro</p>
+                <h3>Novo produto</h3>
+              </div>
+            </div>
+            <form id="productForm" class="form-grid">
+              <label>
+                Nome
+                <input type="text" name="name" placeholder="Ex.: Sonho recheado" required />
+              </label>
+              <label>
+                Categoria
+                <input type="text" name="category" placeholder="Ex.: Doces" required />
+              </label>
+              <label>
+                Preço (R$)
+                <input type="number" step="0.01" min="0.01" name="price" required />
+              </label>
+              <label>
+                Estoque inicial
+                <input type="number" min="0" name="stock" required />
+              </label>
+              <label class="full-width">
+                Descrição
+                <textarea name="description" rows="3" placeholder="Detalhes do produto"></textarea>
+              </label>
+              <button class="primary-button" type="submit">Salvar produto</button>
+            </form>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Vendas</p>
+                <h3>Registrar venda</h3>
+              </div>
+            </div>
+            <form id="saleForm" class="form-grid">
+              <label class="full-width">
+                Produto
+                <select name="productId" id="saleProductSelect" required></select>
+              </label>
+              <label>
+                Quantidade
+                <input type="number" min="1" name="quantity" required />
+              </label>
+              <label>
+                Pagamento
+                <select name="paymentMethod">
+                  <option>Dinheiro</option>
+                  <option>Cartão</option>
+                  <option>Pix</option>
+                </select>
+              </label>
+              <label>
+                Caixa/vendedor
+                <input type="text" name="seller" placeholder="Ex.: Caixa tarde" />
+              </label>
+              <label>
+                Cliente
+                <input type="text" name="customerName" placeholder="Ex.: Balcão" />
+              </label>
+              <button class="primary-button" type="submit">Registrar venda</button>
+            </form>
+          </article>
+        </section>
+
+        <section class="panel-grid lower-grid">
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Catálogo</p>
+                <h3>Produtos e estoque</h3>
+              </div>
+            </div>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-header">
+              <div>
+                <p class="eyebrow">Relatórios</p>
+                <h3>Resumo do dia</h3>
+              </div>
+            </div>
+            <div class="report-card" id="reportCard"></div>
+            <ul class="list" id="bestSellersList"></ul>
+          </article>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <p class="eyebrow">Histórico</p>
+              <h3>Últimas vendas</h3>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Produto</th>
+                  <th>Qtd.</th>
+                  <th>Pagamento</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+              <tbody id="salesTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
